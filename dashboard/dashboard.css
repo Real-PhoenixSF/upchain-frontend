@@ -1,0 +1,61 @@
+body {
+  background-color: #000000;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+  font-family: Arial, sans-serif;
+  color: white;
+  animation: pageFade 2s;
+}
+
+.dot {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: white;
+  border-radius: 50%;
+  opacity: 0;
+  animation: fadeIn 3s infinite;
+}
+
+@keyframes fadeIn {
+  0% {
+      opacity: 0;
+      transform: translateY(20px);
+  }
+  10% {
+      opacity: 1;
+      transform: translateY(10px);
+  }
+  100% {
+      opacity: 0;
+      transform: translateY(0);
+  }
+}
+
+a {
+  text-decoration: none;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: white;
+}
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.graph-column {
+    background-color: #171717;
+    color: #fff;
+    padding: 20px;
+    border-radius: 8px;
+    box-sizing: border-box;
+}

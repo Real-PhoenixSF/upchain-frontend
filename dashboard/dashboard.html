@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>Your Dashboard</title>
+      <link rel="stylesheet" type="text/css" href="dashboard.css">
+    <title>Your Dashboard</title>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+    <body>
+    <header>
+        <h1>Welcome to Your Dashboard</h1>
+        <p>Manage your backup files and monitor uptime here.</p>
+    </header>
+    <main class="grid-container">
+        <section id="account-balance" class="graph-column">
+            <h2>Account Balance</h2>
+            <p>Your account balance in our token: <strong id="bal-val">4500000</strong></p>
+            <p>Equivalent in USD: <strong id="usd-val">120</strong></p>
+        </section>
+      <section id="current-status">
+          <h2>Current Status</h2>
+          <p id="status-subtitle">TO DO</p>
+          <canvas id="status-pie-chart" width="400" height="200"></canvas>
+      </section>
+        <section id="uptime-graph" class="graph-column">
+            <h2>Uptime History</h2>
+            <canvas id="uptime-chart" width="400" height="200"></canvas>
+        </section>
+        <section id="balance-graph" class="graph-column">
+            <h2>Balance Over Time</h2>
+            <canvas id="balance-chart" width="400" height="200"></canvas>
+        </section>
+    </main>
+    <script>
+      async function fetchData(endpoint) {
+          return fetch(endpoint)
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+              })
+              .catch(error => {
+                  console.error('Error fetching data:', error);
+                  return null;
+              });
+      }
+
+      function generateSampleUptimeData() {
+          const data = [];
+          const currentTime = Date.now();
+          const oneDay = 24 * 60 * 60 * 1000;
+          const oneMinute = 60 * 1000; 
+
+          for (let i = 0; i < 1440; i++) {
+              const time = currentTime - oneDay + i * oneMinute;
+              const status = Math.random() > 0.01 ? 1 : 0;
+              data.push({ time, status });
+          }
+
+          return data;
+      }
+
+      async function updateUptimeGraph() {
+          try {
+              const uptimeData = await fetchData('/uptime-endpoint');
+
+              if (!uptimeData) {
+                  const sampleUptimeData = generateSampleUptimeData();
+
+                  const uptimeChartElement = document.getElementById('uptime-chart');
+                  const ctxUptime = uptimeChartElement.getContext('2d');
+                  new Chart(ctxUptime, {
+                      type: 'line',
+                      data: {
+                          labels: sampleUptimeData.map(data => new Date(data.time).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })),
+                          datasets: [{
+                              label: 'Uptime History',
+                              data: sampleUptimeData.map(data => data.status),
+                              borderColor: 'rgb(75, 192, 192)',
+                              tension: 0.1
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              y: {
+                                  beginAtZero: true,
+                                  max: 1,
+                                  ticks: {
+                                      stepSize: 1
+                                  }
+                              }
+                          }
+                      }
+                  });
+              }
+          } catch (error) {
+              console.error('Error fetching uptime data:', error);
+          }
+      }
+
+      window.onload = function () {
+          updateUptimeGraph();
+      };
+        window.addEventListener('load', function () {
+            updateUptimeGraph();
+        });
+    </script>
+
+    <script>
+      async function fetchData(endpoint) {
+          return fetch(endpoint)
+              .then(response => {
+                  if (!response.ok) {
+                      throw new Error('Network response was not ok');
+                  }
+                  return response.json();
+              })
+              .catch(error => {
+                  console.error('Error fetching data:', error);
+                  return null;
+              });
+      }
+
+      function generateSampleBalanceData() {
+          const data = [];
+          const currentMonth = new Date().getMonth();
+          const currentYear = new Date().getFullYear();
+
+          for (let i = 5; i >= 0; i--) {
+              const month = currentMonth - i < 0 ? 12 + (currentMonth - i) : currentMonth - i;
+              const year = currentMonth - i < 0 ? currentYear - 1 : currentYear;
+              const value = Math.floor(Math.random() * 5000000) + 12000;
+              data.push({ month: `${year}-${month}`, value });
+          }
+
+          return data;
+      }
+
+      async function updateBalanceGraph() {
+          try {
+              const balanceData = await fetchData('/balance-over-time-endpoint');
+
+              if (!balanceData) {
+                  const balanceChartElement = document.getElementById('balance-chart');
+                  const sampleBalanceData = generateSampleBalanceData();
+
+                  const labels = sampleBalanceData.map(data => data.month);
+                  const values = sampleBalanceData.map(data => data.value);
+
+                  const ctx = balanceChartElement.getContext('2d');
+                  new Chart(ctx, {
+                      type: 'line',
+                      data: {
+                          labels: labels,
+                          datasets: [{
+                              label: 'Balance Over Time',
+                              data: values,
+                              borderColor: 'rgb(255, 99, 132)',
+                              tension: 0.1
+                          }]
+                      },
+                      options: {
+                          scales: {
+                              y: {
+                                  beginAtZero: true
+                              }
+                          }
+                      }
+                  });
+              }
+          } catch (error) {
+              console.error('Error fetching balance data:', error);
+          }
+      }
+        window.addEventListener('load', function () {
+            updateBalanceGraph();
+        });
+    </script>
+        <script>
+          document.addEventListener("DOMContentLoaded", function() {
+              const dotContainer = document.getElementById("dots-container");
+          const dotCount = 100;
+
+          for (let i = 0; i < dotCount; i++) {
+              const dot = document.createElement("div");
+              dot.className = "dot";
+              dotContainer.appendChild(dot);
+
+              const size = Math.random() * 5 + 1;
+              const left = Math.random() * window.innerWidth + "px";
+              const top = Math.random() * window.innerHeight + "px";
+              const animationDuration = (Math.random() * 4 + 2) + "s";
+
+              dot.style.width = size + "px";
+              dot.style.height = size + "px";
+              dot.style.left = left;
+              dot.style.top = top;
+              dot.style.animationDuration = animationDuration;
+          }
+      });
+  </script>
+</body>
+</html>
