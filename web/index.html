@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+	<link rel="icon" type="image/svg" href="/assets/icon.svg">
+    <title>Upchain - Decentralized backup servers</title>
+</head>
+<body>
+  <script src="script.js"></script>
+	<img src="/assets/webserver.png" id="webserver-img">
+    <section id="header">
+			<img src="/assets/logo.svg" alt="Upchain logo" id="header-img">
+        <div class="title">Your backup plan's<br>missing half</div>
+        <div class="subtitle">Upchain lets you back up your server – not just your data – on a decentralized<br>and secure blockchain network.</div>
+        <div id="buttons">
+                <a href="#section2" class="button">Learn More</a>
+                <a href="javascript:alert('Coming soon!')" class="button">Dashboard</a>
+                <a href="#section5" class="button">Get Started</a>
+        </div>
+    </section>
+    <!-- Section 3 -->
+      <section id="section2">
+          <div class="title">Features</div>
+          <div class="subtitle">Upchain combines an intuitive UX with the resilliance of the blockchain for unmatched results.</div>
+<hr>
+          <div class="feature">
+              <img src="/assets/feature1.png" alt="Feature 1">
+              <p><b>Virtual Backups</b>Your backup servers are managed on the blockchain, not on your local machine.</p>
+          </div>
+
+          <div class="feature">
+              <p><b>Easy Incorporation</b>With Upchain's efficient UX, integrating a decentralized backup server is as easy as changing a DNS record.</p>
+              <img src="/assets/feature2.png" alt="Feature 2">
+          </div>
+
+          <div class="feature">
+              <img src="/assets/feature3.png" alt="Feature 3">
+              <p><b>Blockchain Resilience</b>Our distributed blockchain network will have nodes all over the world to always keep your backups ready-to-go.</p>
+          </div>
+
+          <div class="feature">
+              <p><b>Compatibility</b>Upchain seamlessly integrates with any kind of pre-exsiting main server and doesn't interfere with normal operations.</p>
+              <img src="/assets/feature4.png" alt="Feature 4">
+          </div>
+
+          <div class="feature">
+              <img src="/assets/feature5.png" alt="Feature 5">
+              <p><b>Benefits for All</b>Upchain provides a financial incentive model for node operators and backup services for clients.</p>
+          </div>
+      </section>
+			<!-- Section 2 -->
+				<section id="section3">
+						<div class="title">How does it work?</div>
+						<div class="subtitle">A relatively simple but powerful model for secure and effective backup servers.</div>
+						<img id="diagram-img" src="/assets/diagram.png" alt="">
+						 <script src="https://cdnjs.cloudflare.com/ajax/libs/web3/1.7.4-rc.1/web3.min.js"></script>
+				</div>
+				</section>
+				<section id="section4">
+					<div class="title">Our Team</div>
+					<div id="team-container">
+						<div class="team-card">
+							<img src="/assets/team_member_1.jpg">
+							<h2>Denis Levine</h2>
+							<p>Denis is a junior at Stanford OHS, and a software developer with several years of experience in blockchain, web3, and backend. He has a deep, technical understanding of how these systems work and has worked on projects ranging from sports NFTs, to network states, and now decentralized backup servers. His specialty programming languages are NodeJS, Rust, and Solidity.</p>
+						</div>
+						<div class="team-card">
+							<img src="/assets/team_member_2.jpg">
+							<h2>Ansh Vasani</h2>
+							<p>Ansh, a high school freshman at Stanford OHS and the frontend developer at Upchain, brings a dynamic skillset to the table. He has experience with public speaking, frontend programming (HTML, CSS, and JS), technical software design, and finance (options trading, technical analysis, and long-term portfolio building). A fan of legal shows, Ansh aspires to major in political science and finance, pursuing a future in law school to become a corporate lawyer.</p>
+						</div>
+					</div>
+				</section>
+    <!-- Section 4 -->
+      <section id="section5">
+          <div class="title">Ready to harness the network?</div>
+          <div class="subtitle">Click to connect your web3 wallet, check out our GitHub repos, or contact us with any comments or questions.</div>
+					<div style="display: flex; flex-direction: row; align-items: center; justify-content: center">
+						<a target="_blank" href="https://docs.google.com/forms/d/e/1FAIpQLSecmSdp-P9Injd_a6QgFPpFTbmVYkwRCfQfer_gHCfRavS9bg/viewform?usp=sf_link">
+	          <button class="button">
+	                  Contact Us
+	          </button>
+						<a href="https://github.com/Real-PhoenixSF/upchain-frontend" target="_blank">
+							<button class="button">
+		                  Frontend GitHub Page
+		          </button>
+						</a>
+						<a href="https://github.com/denis-3/dist-proxy" target="_blank">
+							<button class="button">
+		                  Backend GitHub Page
+		          </button>
+						</a>
+					</a>
+					<button onclick="connect();" class="button"><img src="/assets/metamaskpurple.png" /><span>Connect Wallet</span></button>
+					</div>
+      </section>
+		<div id="dots-container"></div>
+		<script>
+		async function connect() {
+			if (window.ethereum) {
+				 await window.ethereum.request({ method: "eth_requestAccounts" });
+				 window.web3 = new Web3(window.ethereum);
+				 const account = web3.eth.accounts;
+				 const walletAddress = account.givenProvider.selectedAddress;
+				 console.log(`Wallet: ${walletAddress}`);
+
+			} else {
+			 if (confirm("You do not have MetaMask installed. Would you like to be redirected to the Chrome extension page to install it?")) {
+				 window.open("https://chrome.google.com/webstore/detail/metamask/nkbihfbeogaeaoehlefnkodbefgpgknn")
+			 }
+			}
+		}
+		</script>
+</body>
+</html>
